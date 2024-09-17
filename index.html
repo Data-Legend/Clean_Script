@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clean Script Tool</title>
+    <style>
+        /* Reset some default styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: #4A90E2;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2rem;
+        }
+
+        main {
+            flex: 1;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        button {
+            background-color: #4A90E2;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #357ABD;
+        }
+
+        .output-container {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .output-container.active {
+            display: flex;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                flex-direction: row;
+                gap: 40px;
+            }
+
+            .input-section, .output-section {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Clean Script</h1>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="input-section">
+                <label for="inputScript">Input Script:</label>
+                <textarea id="inputScript" placeholder="Paste your script here..."></textarea>
+                <div class="button-container">
+                    <button id="cleanButton">Clean Script</button>
+                </div>
+            </div>
+            <div class="output-section">
+                <label for="outputScript">Cleaned Script:</label>
+                <textarea id="outputScript" readonly placeholder="Cleaned script will appear here..."></textarea>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('cleanButton').addEventListener('click', function() {
+            const input = document.getElementById('inputScript').value;
+            const lines = input.split('\n');
+            const cleanedLines = [];
+
+            lines.forEach(line => {
+                let trimmedLine = line.trim();
+
+                // Remove section numbers (e.g., "1. Section Title")
+                trimmedLine = trimmedLine.replace(/^\d+\.\s+/, '');
+
+                // Remove timeline info (e.g., "00:00 - 00:06")
+                if (/^\d{2}:\d{2}\s*-\s*\d{2}:\d{2}$/.test(trimmedLine)) {
+                    return; // Skip this line
+                }
+
+                // Remove link sources (e.g., "1 Icons by icons8.com")
+                if (/^\d+\s+Icons by|^\d+\s+Source:|^\d+\s+References:/.test(trimmedLine)) {
+                    return; // Skip this line
+                }
+
+                // If the line is not empty after trimming, add to cleanedLines
+                if (trimmedLine !== '') {
+                    cleanedLines.push(trimmedLine);
+                }
+            });
+
+            const cleanedScript = cleanedLines.join('\n');
+            document.getElementById('outputScript').value = cleanedScript;
+        });
+    </script>
+
+</body>
+</html>
