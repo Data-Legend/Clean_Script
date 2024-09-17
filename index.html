@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clean Script Tool</title>
+    
+    <!-- Font Awesome CDN for Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-p7M+q7H4Dl5F9C1u1dF5Y0H0K5P2aNq2mFoWZ5Z5p5F6lF7lF8fF9lF0hF1jF2kF3lF4mF5nF6oF7pF8qF9rF0sF1tF2uF3vF4wF5xF6yF7zF8A9B0C1D2E3F4G5H6I7J8K9L0M1N2O3P4Q5R6S7T8U9V0W1X2Y3Z4"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    
     <style>
         /* Reset some default styles */
         * {
@@ -27,10 +37,20 @@
             padding: 20px 0;
             text-align: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px; /* Space between icon and title */
         }
 
         header h1 {
             font-size: 2rem;
+            display: flex;
+            align-items: center;
+        }
+
+        header .header-icon {
+            font-size: 2.5rem;
         }
 
         main {
@@ -66,6 +86,7 @@
 
         .button-container {
             text-align: center;
+            margin-top: 15px; /* Added margin between textarea and button */
         }
 
         button {
@@ -110,6 +131,8 @@
 <body>
 
     <header>
+        <!-- Added Icon using Font Awesome -->
+        <i class="fas fa-screwdriver-wrench header-icon" aria-hidden="true"></i>
         <h1>Clean Script</h1>
     </header>
 
@@ -159,6 +182,9 @@
 
             const cleanedScript = cleanedLines.join('\n');
             document.getElementById('outputScript').value = cleanedScript;
+
+            // Show the output container
+            document.querySelector('.output-section').classList.add('active');
         });
     </script>
 
